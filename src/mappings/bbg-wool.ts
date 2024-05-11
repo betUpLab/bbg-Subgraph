@@ -44,9 +44,9 @@ export function handleTransfer1(event: Transfer1Event): void {
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
   entity.transactionHash = event.transaction.hash
-  entity.name = "0404"
-  // let jsonString = factoryContract.tokenURI(event.params.id);
-  // entity.name = jsonString
+  // entity.name = "0404"
+  let jsonString = factoryContract.tokenURI(event.params.id);
+  entity.name = jsonString
   if (event.params.to.toHexString() != ADDRESS_ZERO) {
     entity.save();
   }
