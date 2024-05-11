@@ -19,5 +19,5 @@ jobs:
           TESTNET_GRAPH_NODE_URL: ${{ secrets.TESTNET_GRAPH_NODE_URL }}
           TESTNET_GRAPH_IPFS_URL: ${{ secrets.TESTNET_GRAPH_IPFS_URL }}
         run: |
-          chmod +x ./scripts/deploy.sh
-          ./scripts/deploy.sh
+          chmod +x ./scripts/deploy-fxcore.sh
+          ./scripts/deploy-fxcore.sh
