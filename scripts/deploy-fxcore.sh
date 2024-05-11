@@ -14,7 +14,7 @@ npx graph build
 echo "Deploying to Graph node"
 npx graph create --node "${graphNodeUrl}" "${subgraphName}"
 # npx graph deploy --ipfs "${ipfsUrl}" --node "${graphNodeUrl}" "${subgraphName}"
-npx graph deploy --ipfs "${ipfsUrl}" --node "${graphNodeUrl}" $name ${subgraph}subgraph.yaml -l "v0.0.1"
+npx graph deploy --ipfs "${ipfsUrl}" --node "${graphNodeUrl}" $name ${subgraph} -l "v0.0.1"
 echo "Deployed to $graphNodePubUrl/subgraphs/name/${subgraphName}/graphql"
 echo "Subgraph endpoints:"
 echo "Queries (HTTP): $graphNodePubUrl/subgraphs/name/${subgraphName}"
