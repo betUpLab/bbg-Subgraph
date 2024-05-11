@@ -1,6 +1,7 @@
 {
-  "name": "wool10",
-  "license": "UNLICENSED",
+  "name": "subgraphFXBBG",
+  "version": "1.0.0",
+  "license": "GPL-3.0-or-later",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
