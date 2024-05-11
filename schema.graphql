@@ -9,7 +9,7 @@ type Transfer @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-type Transfer1 @entity(immutable: true) {
+type Transfer721 @entity(immutable: true) {
   id: Bytes!
   from: Bytes! # address
   to: Bytes! # address
@@ -17,6 +17,5 @@ type Transfer1 @entity(immutable: true) {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
-  name: String
-  color: String
+  colorID: String
 }

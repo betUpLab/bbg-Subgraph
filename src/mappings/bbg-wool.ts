@@ -7,7 +7,7 @@ import {
 
 import {
   Transfer,
-  Transfer1
+  Transfer721
 } from "../../generated/schema"
 
 export const FACTORY_ADDRESS = "0xDADaa4956CAf8E0cda39925e1e31167693E91A42";
@@ -34,7 +34,7 @@ export function handleTransfer(event: TransferEvent): void {
 }
 
 export function handleTransfer1(event: Transfer1Event): void {
-  let entity = new Transfer1(
+  let entity = new Transfer721(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
   entity.from = event.params.from
@@ -44,9 +44,9 @@ export function handleTransfer1(event: Transfer1Event): void {
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
   entity.transactionHash = event.transaction.hash
-  // entity.name = "0404"
-  let jsonString = factoryContract.tokenURI(event.params.id);
-  entity.name = jsonString
+
+  // let jsonString = factoryContract.tokenURI(event.params.id);
+  // entity.colorID = jsonString
   if (event.params.to.toHexString() != ADDRESS_ZERO) {
     entity.save();
   }

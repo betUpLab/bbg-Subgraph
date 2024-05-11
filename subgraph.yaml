@@ -16,7 +16,7 @@ dataSources:
       file: ./src/mappings/bbg-wool.ts
       entities:
         - Transfer
-        - Transfer1
+        - Transfer721
       abis:
         - name: BBGWool
           file: ./abis/BBGWool.json
