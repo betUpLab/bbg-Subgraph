@@ -11,11 +11,9 @@
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 wool10",
     "test": "graph test"
   },
-  "dependencies": {
-    "@graphprotocol/graph-ts": "0.32.0"
-  },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.71.2",
+    "@graphprotocol/graph-cli": "^0.60.0",
+    "@graphprotocol/graph-ts": "^0.30.0",
     "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@types/node": "^20.12.11",
     "ethers": "^6.12.1",
