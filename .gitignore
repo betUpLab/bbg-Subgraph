@@ -13,3 +13,5 @@ yarn-debug.log*
 yarn-error.log*
 
 docker-compose.yml
+
+package-lock.json
