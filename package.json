@@ -1,0 +1,24 @@
+{
+  "name": "wool10",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ wool10",
+    "create-local": "graph create --node http://localhost:8020/ wool10",
+    "remove-local": "graph remove --node http://localhost:8020/ wool10",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 wool10",
+    "test": "graph test"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-ts": "0.32.0"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.71.2",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@types/node": "^20.12.11",
+    "ethers": "^6.12.1",
+    "matchstick-as": "0.5.0",
+    "typechain": "^8.3.2"
+  }
+}

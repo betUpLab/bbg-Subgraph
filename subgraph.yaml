@@ -1,0 +1,28 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: BBGWool
+    network: testnet
+    source:
+      address: "0xDADaa4956CAf8E0cda39925e1e31167693E91A42"
+      abi: BBGWool 
+      startBlock: 13949131
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/bbg-wool.ts
+      entities:
+        - Transfer
+        - Transfer1
+      abis:
+        - name: BBGWool
+          file: ./abis/BBGWool.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer1
+      
