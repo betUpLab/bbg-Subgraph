@@ -11,7 +11,6 @@ yarn
 yarn codegen
 npx graph build
 
-npx graph remove --node "${graphNodeUrl}" $name
 # echo "Deploying to Graph node"
 npx graph create --node "${graphNodeUrl}" "${subgraphName}"
 
