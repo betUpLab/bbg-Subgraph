@@ -45,14 +45,12 @@ export function handleTransfer1(event: Transfer1Event): void {
   entity.blockTimestamp = event.block.timestamp
   entity.transactionHash = event.transaction.hash
 
-    // let tokenURICall = factoryContract.try_tokenURI(event.params.id);
-    // if (!tokenURICall.reverted) {
-    //   entity.colorID = tokenURICall.value.toString();
-    // } else { 
-    //   entity.colorID = "";
-    // } 
-    const jsonString = factoryContract.tokenURI(event.params.id)
-    entity.colorID = jsonString;
+    let tokenURICall = factoryContract.try_tokenURI(event.params.id);
+    if (!tokenURICall.reverted) {
+      entity.colorID = tokenURICall.value.toString();
+    } else { 
+      entity.colorID = "";
+    } 
 
   if (event.params.to.toHexString() != ADDRESS_ZERO) {
     entity.save();
