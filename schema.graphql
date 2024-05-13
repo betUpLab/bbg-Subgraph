@@ -17,5 +17,5 @@ type Transfer721 @entity(immutable: true) {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
-  colorID: String
+  colorID: String!
 }

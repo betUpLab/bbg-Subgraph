@@ -1,0 +1,32 @@
+
+ûódataSources:
+  - kind: ethereum/contract
+    mapping:
+      abis:
+        - file:
+            /: /ipfs/QmXA7wnWFidYWYcyP1oyXEYx7AUMyxUg5FDmRgsNqSb9kN
+          name: BBGWool
+      apiVersion: 0.0.6
+      entities:
+        - Transfer
+        - Transfer721
+      eventHandlers:
+        - event: 'Transfer(indexed address,indexed address,uint256)'
+          handler: handleTransfer
+        - event: 'Transfer(indexed address,indexed address,indexed uint256)'
+          handler: handleTransfer1
+      file:
+        /: /ipfs/QmaKtX3k2kAxJWEruFwWyKJvcSj9RyzXSZE2Ns5WBnuHjs
+      kind: ethereum/events
+      language: wasm/assemblyscript
+    name: BBGWool
+    network: testnet
+    source:
+      abi: BBGWool
+      address: '0xDADaa4956CAf8E0cda39925e1e31167693E91A42'
+      startBlock: 13952757
+schema:
+  file:
+    /: /ipfs/QmPwVfpEYm4ZcMj66jMizaD9vgsWvTA2kzoEJWfMkcHLZ6
+specVersion: 0.0.4
+ó

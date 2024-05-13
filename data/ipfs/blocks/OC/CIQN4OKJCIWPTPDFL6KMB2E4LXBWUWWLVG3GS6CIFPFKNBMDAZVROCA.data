@@ -1,0 +1,32 @@
+
+ðèdataSources:
+  - kind: ethereum
+    mapping:
+      abis:
+        - file:
+            /: /ipfs/QmUagrdwWK1FmW5EEuU55reDyJaDhqP3argk6xwoM1emY3
+          name: BBGWool6
+      apiVersion: 0.0.7
+      entities:
+        - Transfer
+        - Transfer1
+      eventHandlers:
+        - event: 'Transfer(indexed address,indexed address,uint256)'
+          handler: handleTransfer
+        - event: 'Transfer(indexed address,indexed address,indexed uint256)'
+          handler: handleTransfer1
+      file:
+        /: /ipfs/QmYmGiF96cv1vcAZNx9VKdUYJbTVKrdktdxcUzR6XxWsEg
+      kind: ethereum/events
+      language: wasm/assemblyscript
+    name: BBGWool6
+    network: fuji
+    source:
+      abi: BBGWool6
+      address: '0x716d3F87009FCFDc95727CEe1699E85C5CE40d12'
+      startBlock: 32716681
+schema:
+  file:
+    /: /ipfs/QmT35L7YfgM5cs15oXiKEZe8TW8ksWCWWU3S4NRxVSFZmX
+specVersion: 0.0.5
+è

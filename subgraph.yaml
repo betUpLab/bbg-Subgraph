@@ -1,4 +1,4 @@
-specVersion: 0.0.5
+specVersion: 0.0.4
 schema:
   file: ./schema.graphql
 dataSources:
@@ -11,7 +11,7 @@ dataSources:
       startBlock: 13949131
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.7
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/mappings/bbg-wool.ts
       entities:
@@ -25,4 +25,3 @@ dataSources:
           handler: handleTransfer
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer1
-      
