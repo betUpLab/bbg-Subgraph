@@ -1,4 +1,6 @@
-import { Address } from "@graphprotocol/graph-ts"
+import { Address, JSONValueKind } from "@graphprotocol/graph-ts"
+import { JSONValue, TypedMap, json, log , ValueKind } from '@graphprotocol/graph-ts';
+
 import {
   Transfer as TransferEvent,
   Transfer1 as Transfer1Event,
@@ -16,6 +18,47 @@ export const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
 export let factoryContract = BBGWoolContract.bind(
   Address.fromString(FACTORY_ADDRESS)
 );
+
+export function extractValueFromAttributes(jsonString: string): string {
+
+  const rmOther = jsonString.replace('data:application/json;utf8,', '');
+
+  let colorValue = "unknown";
+
+  let jsonObject: JSONValue | null = json.fromString(rmOther);
+
+  if (jsonObject != null && jsonObject.kind == JSONValueKind.OBJECT) {
+    let obj = jsonObject.toObject();
+
+    if (obj.isSet('attributes')) {
+      let attributes = obj.get('attributes');
+
+      if (attributes != null && attributes.kind == JSONValueKind.ARRAY) {
+        let attributesArray = attributes.toArray();
+
+        for (let i = 0; i < attributesArray.length; i++) {
+          let attribute = attributesArray[i].toObject();
+
+          if (
+            attribute.isSet('trait_type') &&
+            attribute.get('trait_type')!.toString() == 'Color' &&
+            attribute.isSet('value')
+          ) {
+            colorValue = attribute.get('value')!.toString();
+          }
+        }
+
+      } else {
+        colorValue = "attributes is not an array";
+      }
+    } else {
+      colorValue = "attributes not found";
+    }
+  } else {
+    colorValue =  "JSON object is not an object"
+  }
+  return colorValue;
+}
 
 export function handleTransfer(event: TransferEvent): void {
   let entity = new Transfer(
@@ -47,7 +90,8 @@ export function handleTransfer1(event: Transfer1Event): void {
 
     let tokenURICall = factoryContract.try_tokenURI(event.params.id);
     if (!tokenURICall.reverted) {
-      entity.colorID = tokenURICall.value.toString();
+      const tokenURI = tokenURICall.value.toString();
+      entity.colorID = extractValueFromAttributes(tokenURI);
     } else { 
       entity.colorID = "";
     } 
@@ -56,4 +100,3 @@ export function handleTransfer1(event: Transfer1Event): void {
     entity.save();
   }
 }
-
