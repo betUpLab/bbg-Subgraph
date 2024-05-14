@@ -1,64 +1,20 @@
-import { Address, JSONValueKind } from "@graphprotocol/graph-ts"
-import { JSONValue, TypedMap, json, log , ValueKind } from '@graphprotocol/graph-ts';
-
 import {
   Transfer as TransferEvent,
   Transfer1 as Transfer1Event,
-  BBGWool as BBGWoolContract  
 } from "../../generated/BBGWool/BBGWool"
 
 import {
   Transfer,
-  Transfer721
+  Transfer721,
+  Token721List
 } from "../../generated/schema"
 
-export const FACTORY_ADDRESS = "0xDADaa4956CAf8E0cda39925e1e31167693E91A42";
-export const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
+import {
+  extractValueFromAttributes,
+  ADDRESS_ZERO,
+  factoryContract,
+} from "./helpers";
 
-export let factoryContract = BBGWoolContract.bind(
-  Address.fromString(FACTORY_ADDRESS)
-);
-
-export function extractValueFromAttributes(jsonString: string): string {
-
-  const rmOther = jsonString.replace('data:application/json;utf8,', '');
-
-  let colorValue = "unknown";
-
-  let jsonObject: JSONValue | null = json.fromString(rmOther);
-
-  if (jsonObject != null && jsonObject.kind == JSONValueKind.OBJECT) {
-    let obj = jsonObject.toObject();
-
-    if (obj.isSet('attributes')) {
-      let attributes = obj.get('attributes');
-
-      if (attributes != null && attributes.kind == JSONValueKind.ARRAY) {
-        let attributesArray = attributes.toArray();
-
-        for (let i = 0; i < attributesArray.length; i++) {
-          let attribute = attributesArray[i].toObject();
-
-          if (
-            attribute.isSet('trait_type') &&
-            attribute.get('trait_type')!.toString() == 'Color' &&
-            attribute.isSet('value')
-          ) {
-            colorValue = attribute.get('value')!.toString();
-          }
-        }
-
-      } else {
-        colorValue = "attributes is not an array";
-      }
-    } else {
-      colorValue = "attributes not found";
-    }
-  } else {
-    colorValue =  "JSON object is not an object"
-  }
-  return colorValue;
-}
 
 export function handleTransfer(event: TransferEvent): void {
   let entity = new Transfer(
@@ -80,9 +36,14 @@ export function handleTransfer1(event: Transfer1Event): void {
   let entity = new Transfer721(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
+
+  let tokenID = event.params.id
+  let to = event.params.to
+  let transactionHash =  event.transaction.hash
+
   entity.from = event.params.from
-  entity.to = event.params.to
-  entity.tokenID = event.params.id
+  entity.to = to
+  entity.tokenID = tokenID
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
@@ -98,5 +59,20 @@ export function handleTransfer1(event: Transfer1Event): void {
 
   if (event.params.to.toHexString() != ADDRESS_ZERO) {
     entity.save();
+  }
+
+  let token721List = Token721List.load(tokenID.toString())
+  if(token721List == null){
+    token721List = new Token721List(tokenID.toString())
+      token721List.tokenID = tokenID.toString()
+      token721List.owner = to
+      token721List.transactionHash = transactionHash
+      token721List.version = 1
+      token721List.save()
+  } else {
+    token721List.owner = to
+    token721List.transactionHash = transactionHash
+    token721List.version = token721List.version + 1
+    token721List.save()
   }
 }

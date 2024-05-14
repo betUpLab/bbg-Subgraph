@@ -17,6 +17,7 @@ dataSources:
       entities:
         - Transfer
         - Transfer721
+        - Token721List
       abis:
         - name: BBGWool
           file: ./abis/BBGWool.json

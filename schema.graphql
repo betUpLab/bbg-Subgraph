@@ -19,3 +19,11 @@ type Transfer721 @entity(immutable: true) {
   transactionHash: Bytes!
   colorID: String!
 }
+
+type Token721List @entity {
+  id: String!
+  tokenID: String!
+  owner: Bytes! # address
+  version: Int!
+  transactionHash: Bytes!
+}
