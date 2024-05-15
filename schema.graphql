@@ -25,5 +25,6 @@ type Token721List @entity {
   tokenID: String!
   owner: Bytes! # address
   version: Int!
+  colorID: String!
   transactionHash: Bytes!
 }

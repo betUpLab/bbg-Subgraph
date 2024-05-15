@@ -54,9 +54,9 @@ export function handleTransfer1(event: Transfer1Event): void {
       const tokenURI = tokenURICall.value.toString();
       entity.colorID = extractValueFromAttributes(tokenURI);
     } else { 
-      entity.colorID = "";
+      entity.colorID = "unknown";
     } 
-
+  let colorID = entity.colorID 
   if (event.params.to.toHexString() != ADDRESS_ZERO) {
     entity.save();
   }
@@ -68,11 +68,13 @@ export function handleTransfer1(event: Transfer1Event): void {
       token721List.owner = to
       token721List.transactionHash = transactionHash
       token721List.version = 1
+      token721List.colorID = colorID
       token721List.save()
   } else {
     token721List.owner = to
     token721List.transactionHash = transactionHash
     token721List.version = token721List.version + 1
+    token721List.colorID = colorID
     token721List.save()
   }
 }
