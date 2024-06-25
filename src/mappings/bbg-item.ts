@@ -18,13 +18,15 @@ export function handleTransferSingle(event: TransferEvent): void {
     entity.amount = event.params.value
     entity.itemID = event.params.id.toString()
     
-    let itemDetailCall = bbgItemContract.try_itemDetail(Bytes.fromHexString(event.params.id.toString()));
+    // let itemDetailCall = bbgItemContract.try_itemDetail(Bytes.fromHexString(event.params.id.toString()));
     
-    if (!itemDetailCall.reverted) {
-        entity.name = itemDetailCall.value.getName()
-    } else {
-        entity.name = "unknown"
-    }
+    // if (!itemDetailCall.reverted) {
+    //     entity.name = itemDetailCall.value.getName()
+    // } else {
+    //     entity.name = "unknown"
+    // }
+
+    entity.name = "unknown"
 
     entity.operator = event.params.operator
     entity.blockNumber = event.block.number
