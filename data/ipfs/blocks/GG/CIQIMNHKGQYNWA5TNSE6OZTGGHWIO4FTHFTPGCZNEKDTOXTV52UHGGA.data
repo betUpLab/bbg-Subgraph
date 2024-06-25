@@ -1,4 +1,5 @@
 
+¹±
 type Transfer @entity(immutable: true) {
   id: Bytes!
   from: Bytes! # address
@@ -39,3 +40,4 @@ type TransferSingle @entity {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+±

@@ -26,3 +26,25 @@ dataSources:
           handler: handleTransfer
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer1
+  - kind: ethereum/contract
+    name: BBGItem
+    network: testnet
+    source:
+        address: "0x08E9E62d5a27dC4A475EcAa6900fCf7e3AC7553D"
+        abi: BBGItem
+        startBlock: 14935877
+    mapping:
+        kind: ethereum/events
+        apiVersion: 0.0.6
+        language: wasm/assemblyscript
+        file: ./src/mappings/bbg-item.ts
+        entities:
+          - TransferSingle
+        abis:
+          - name: BBGItem
+            file: ./abis/BBGItem.json
+        eventHandlers:
+          - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+            handler: handleTransferSingle
+
+
