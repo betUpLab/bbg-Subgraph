@@ -5,8 +5,6 @@ import {
   import {
     TransferSingle
   } from "../../generated/schema"
-import { bbgItemContract } from "./helpers"
-
 
   
 export function handleTransferSingle(event: TransferEvent): void {
@@ -17,6 +15,7 @@ export function handleTransferSingle(event: TransferEvent): void {
     entity.to = event.params.to
     entity.amount = event.params.value
     entity.itemID = event.params.id.toString()
+    entity.name = "unknown"
 
     entity.operator = event.params.operator
     entity.blockNumber = event.block.number
