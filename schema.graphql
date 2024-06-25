@@ -38,4 +38,5 @@ type TransferSingle @entity {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+  name: String!
 }

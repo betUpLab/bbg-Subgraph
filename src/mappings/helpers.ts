@@ -5,11 +5,22 @@ import {
   BBGWool as BBGWoolContract  
 } from "../../generated/BBGWool/BBGWool"
 
+
+import {
+  BBGItem as BBGItemContract  
+} from "../../generated/BBGItem/BBGItem"
+
 export const FACTORY_ADDRESS = "0xDADaa4956CAf8E0cda39925e1e31167693E91A42";
 export const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
 
+export const FACTORY_BBGITEM_ADDRESS = "0x08E9E62d5a27dC4A475EcAa6900fCf7e3AC7553D";
+
 export let factoryContract = BBGWoolContract.bind(
   Address.fromString(FACTORY_ADDRESS)
+);
+
+export let bbgItemContract = BBGItemContract.bind(
+  Address.fromString(FACTORY_BBGITEM_ADDRESS)
 );
 
 
