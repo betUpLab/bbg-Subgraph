@@ -1,3 +1,4 @@
+import { Bytes } from "@graphprotocol/graph-ts";
 import {
     TransferSingle as TransferEvent,
   } from "../../generated/BBGItem/BBGItem"
@@ -5,6 +6,7 @@ import {
   import {
     TransferSingle
   } from "../../generated/schema"
+import { bbgItemContract } from "./helpers"
 
   
 export function handleTransferSingle(event: TransferEvent): void {
@@ -15,7 +17,14 @@ export function handleTransferSingle(event: TransferEvent): void {
     entity.to = event.params.to
     entity.amount = event.params.value
     entity.itemID = event.params.id.toString()
-    entity.name = "unknown"
+    
+    let itemDetailCall = bbgItemContract.try_itemDetail(Bytes.fromHexString(event.params.id.toString()));
+    
+    if (!itemDetailCall.reverted) {
+        entity.name = itemDetailCall.value.getName()
+    } else {
+        entity.name = "unknown"
+    }
 
     entity.operator = event.params.operator
     entity.blockNumber = event.block.number
