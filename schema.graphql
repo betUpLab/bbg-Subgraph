@@ -30,7 +30,7 @@ type Token721List @entity {
 }
 
 type TransferSingle @entity {
-  id: String!
+  id: Bytes!
   operator: Bytes! # address
   from: Bytes! # address
   to: Bytes! # address

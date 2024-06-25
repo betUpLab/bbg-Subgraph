@@ -10,12 +10,8 @@ import { bbgItemContract } from "./helpers"
 
   
 export function handleTransferSingle(event: TransferEvent): void {
-    // let entity = new TransferSingle(  
-    //   event.transaction.hash.concatI32(event.logIndex.toI32())
-
-    // )
     let entity = new TransferSingle(
-      event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+      event.transaction.hash.concatI32(event.logIndex.toI32())
     )
     entity.from = event.params.from
     entity.to = event.params.to
