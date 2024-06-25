@@ -50,3 +50,5 @@
 02:38:13.932026 version@stat F·[2] S·2KiB[2KiB] Sc·[0.50]
 02:38:13.937814 db@janitor F·4 G·0
 02:38:13.938747 db@open done T·22.926209ms
+03:48:18.593001 db@close closing
+03:48:18.594767 db@close done T·1.736458ms
