@@ -67,21 +67,3 @@ export function extractValueFromAttributes(jsonString: string): string {
     }
     return colorValue;
   }
-
-
-
-export function bigIntToBytes32(value: BigInt): Bytes {
-  let bytes = new Uint8Array(32);
-  bytes.fill(0);
-
-  let valueStr = value.toString(16);
-  while (valueStr.length < 64) {
-    valueStr = "0" + valueStr;
-  }
-
-  for (let i = 0; i < 32; i++) {
-    bytes[31 - i] = <u8>parseInt(valueStr.slice(i * 2, i * 2 + 2), 16);
-  }
-
-  return Bytes.fromUint8Array(bytes);
-}

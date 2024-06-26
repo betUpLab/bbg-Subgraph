@@ -21,7 +21,7 @@ export function handleTransferSingle(event: TransferEvent): void {
     let itemDetailCall = bbgItemContract.try_itemDetail(bytesParams);
 
     if (!itemDetailCall.reverted) {
-        entity.name = itemDetailCall.value.getName()
+        entity.name = itemDetailCall.value.getName() + bytesParams.toString()
     } else {
         entity.name = "unknown" + bytesParams.toString()
     }
