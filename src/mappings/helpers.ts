@@ -69,14 +69,19 @@ export function extractValueFromAttributes(jsonString: string): string {
   }
 
 
-export function bigIntToBytes32(value: BigInt): Bytes {
-  let bytes32 = new Uint8Array(32);
-  let bigIntBytes = value.toHexString().slice(2).padStart(64, '0').toLowerCase();
 
-  for (let i = 0; i < 32; i++) {
-    bytes32[i] = <u32>parseInt(bigIntBytes.slice(i * 2, i * 2 + 2), 16);
+export function bigIntToBytes32(value: BigInt): Bytes {
+  let bytes = new Uint8Array(32);
+  bytes.fill(0);
+
+  let valueStr = value.toString(16);
+  while (valueStr.length < 64) {
+    valueStr = "0" + valueStr;
   }
 
-  return bytes32 as Bytes;
-}
+  for (let i = 0; i < 32; i++) {
+    bytes[31 - i] = <u8>parseInt(valueStr.slice(i * 2, i * 2 + 2), 16);
+  }
 
+  return Bytes.fromUint8Array(bytes);
+}
