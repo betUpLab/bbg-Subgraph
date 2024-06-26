@@ -18,8 +18,8 @@ export function handleTransferSingle(event: TransferEvent): void {
     
     entity.itemID = event.params.id.toString()
     
-    
-    let bytesParams = Bytes.fromByteArray(Bytes.fromBigInt(event.params.id)) 
+
+    let bytesParams = Bytes.fromByteArray(ByteArray.fromHexString(event.params.id.toHexString())) 
     let itemDetailCall = bbgItemContract.try_itemDetail(bytesParams);
 
     if (!itemDetailCall.reverted) {
