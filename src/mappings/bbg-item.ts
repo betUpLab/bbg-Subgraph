@@ -6,7 +6,7 @@ import {
   import {
     TransferSingle
   } from "../../generated/schema"
-import { bbgItemContract, bigIntToBytes32 } from "./helpers"
+import { bbgItemContract } from "./helpers"
   
 export function handleTransferSingle(event: TransferEvent): void {
     let entity = new TransferSingle(
