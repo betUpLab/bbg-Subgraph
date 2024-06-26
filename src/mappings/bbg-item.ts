@@ -6,8 +6,7 @@ import {
   import {
     TransferSingle
   } from "../../generated/schema"
-import { bbgItemContract } from "./helpers"
-
+import { bbgItemContract, bigIntToBytes32 } from "./helpers"
   
 export function handleTransferSingle(event: TransferEvent): void {
     let entity = new TransferSingle(
@@ -18,7 +17,8 @@ export function handleTransferSingle(event: TransferEvent): void {
     entity.amount = event.params.value
     entity.itemID = event.params.id.toString()
     
-    let itemDetailCall = bbgItemContract.try_itemDetail(Bytes.fromByteArray(Bytes.fromBigInt(event.params.id)));
+    let bytesParams = bigIntToBytes32(event.params.id)
+    let itemDetailCall = bbgItemContract.try_itemDetail(bytesParams);
 
     if (!itemDetailCall.reverted) {
         entity.name = itemDetailCall.value.getName()

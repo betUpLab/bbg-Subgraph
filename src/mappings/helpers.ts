@@ -1,6 +1,9 @@
 import { Address, JSONValueKind } from "@graphprotocol/graph-ts"
 import { JSONValue, TypedMap, json, log , ValueKind } from '@graphprotocol/graph-ts';
 
+import { Bytes, BigInt } from '@graphprotocol/graph-ts';
+
+
 import {
   BBGWool as BBGWoolContract  
 } from "../../generated/BBGWool/BBGWool"
@@ -64,3 +67,16 @@ export function extractValueFromAttributes(jsonString: string): string {
     }
     return colorValue;
   }
+
+
+export function bigIntToBytes32(value: BigInt): Bytes {
+  let bytes32 = new Uint8Array(32);
+  let bigIntBytes = value.toHexString().slice(2).padStart(64, '0').toLowerCase();
+
+  for (let i = 0; i < 32; i++) {
+    bytes32[i] = <u32>parseInt(bigIntBytes.slice(i * 2, i * 2 + 2), 16);
+  }
+
+  return bytes32 as Bytes;
+}
+
