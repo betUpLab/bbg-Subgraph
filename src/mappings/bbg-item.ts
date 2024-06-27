@@ -1,4 +1,4 @@
-import { ByteArray, Bytes } from "@graphprotocol/graph-ts";
+import { ByteArray, Bytes , BigInt} from "@graphprotocol/graph-ts";
 import {
     TransferSingle as TransferEvent,
   } from "../../generated/BBGItem/BBGItem"
@@ -23,10 +23,10 @@ export function handleTransferSingle(event: TransferEvent): void {
 
     if (!tokenIdTraitCall.reverted) {
 
-        let catalogueId = tokenIdTraitCall.value.value0
-        let rarityId = tokenIdTraitCall.value.value1
-        let levelId = tokenIdTraitCall.value.value2
-        let graphicId = tokenIdTraitCall.value.value3
+        let catalogueId = BigInt.fromI32(tokenIdTraitCall.value.value0)
+        let rarityId = BigInt.fromI32(tokenIdTraitCall.value.value1)
+        let levelId = BigInt.fromI32(tokenIdTraitCall.value.value2)
+        let graphicId = BigInt.fromI32(tokenIdTraitCall.value.value3)
 
         let getUidCall =  bbgItemContract.try_getUid(catalogueId , rarityId, levelId, graphicId) 
 
