@@ -6,7 +6,7 @@ import {
   import {
     SheepSingle
   } from "../../generated/schema"
-import { bbgItemContract } from "./helpers"
+import { getSheepName } from "./helpers"
 
   export function handleTransferSheep(event: TransferEvent): void {  
     let entity = new SheepSingle(
@@ -16,6 +16,7 @@ import { bbgItemContract } from "./helpers"
       entity.from = event.params.from
       entity.to = event.params.to
       entity.tokenId = event.params.tokenId
+      entity.name = getSheepName(event.params.tokenId)
       
       entity.blockNumber = event.block.number
       entity.blockTimestamp = event.block.timestamp

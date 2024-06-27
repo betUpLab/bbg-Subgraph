@@ -6,7 +6,7 @@ import {
   import {
     TransferSingle
   } from "../../generated/schema"
-import { bbgItemContract } from "./helpers"
+import { getItemName } from "./helpers"
   
 export function handleTransferSingle(event: TransferEvent): void {
     let entity = new TransferSingle(
@@ -18,36 +18,8 @@ export function handleTransferSingle(event: TransferEvent): void {
     
     entity.itemID = event.params.id.toString()
     
+    entity.name = getItemName(event.params.id)
     
-    let tokenIdTraitCall = bbgItemContract.try_tokenIdTrait(event.params.id); 
-
-    if (!tokenIdTraitCall.reverted) {
-
-        let catalogueId = BigInt.fromI32(tokenIdTraitCall.value.value0)
-        let rarityId = BigInt.fromI32(tokenIdTraitCall.value.value1)
-        let levelId = BigInt.fromI32(tokenIdTraitCall.value.value2)
-        let graphicId = BigInt.fromI32(tokenIdTraitCall.value.value3)
-
-        let getUidCall =  bbgItemContract.try_getUid(catalogueId , rarityId, levelId, graphicId) 
-
-        if (!getUidCall.reverted) {
-
-           let itemDetailCall = bbgItemContract.try_itemDetail(getUidCall.value)
-
-            if (!itemDetailCall.reverted) {
-                entity.name = itemDetailCall.value.getName()
-            } else {
-                entity.name = "unknown"
-            }
-
-        } else {
-            entity.name = "unknown"
-        }
-
-    } else {
-        entity.name = "unknown"
-    }
-
     entity.operator = event.params.operator
     entity.blockNumber = event.block.number
     entity.blockTimestamp = event.block.timestamp

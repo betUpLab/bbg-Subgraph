@@ -47,6 +47,7 @@ type SheepSingle  @entity {
   from: Bytes! # address
   to: Bytes! # address
   tokenId: BigInt!
+  name: String!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -57,6 +58,7 @@ type GardenSingle  @entity {
   from: Bytes! # address
   to: Bytes! # address
   tokenId: BigInt!
+  name: String!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
