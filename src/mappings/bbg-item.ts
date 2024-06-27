@@ -18,17 +18,35 @@ export function handleTransferSingle(event: TransferEvent): void {
     
     entity.itemID = event.params.id.toString()
     
+    
+    let tokenIdTraitCall = bbgItemContract.try_tokenIdTrait(event.params.id); 
 
-    // let bytesParams = Bytes.fromByteArray(ByteArray.fromHexString(event.params.id.toHexString())) 
-    // let itemDetailCall = bbgItemContract.try_itemDetail(bytesParams);
+    if (!tokenIdTraitCall.reverted) {
 
-    // if (!itemDetailCall.reverted) {
-    //     entity.name = itemDetailCall.value.getName()
-    // } else {
-    //     entity.name = "unknown"
-    // }
+        let catalogueId = tokenIdTraitCall.value.value0
+        let rarityId = tokenIdTraitCall.value.value1
+        let levelId = tokenIdTraitCall.value.value2
+        let graphicId = tokenIdTraitCall.value.value3
 
-    entity.name = "unknown"
+        let getUidCall =  bbgItemContract.try_getUid(catalogueId , rarityId, levelId, graphicId) 
+
+        if (!getUidCall.reverted) {
+
+           let itemDetailCall = bbgItemContract.try_itemDetail(getUidCall.value)
+
+            if (!itemDetailCall.reverted) {
+                entity.name = itemDetailCall.value.getName()
+            } else {
+                entity.name = "unknown"
+            }
+
+        } else {
+            entity.name = "unknown"
+        }
+
+    } else {
+        entity.name = "unknown"
+    }
 
     entity.operator = event.params.operator
     entity.blockNumber = event.block.number
