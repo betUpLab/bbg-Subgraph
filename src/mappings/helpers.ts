@@ -5,8 +5,16 @@ import { Bytes, BigInt } from '@graphprotocol/graph-ts';
 
 
 import {
-  BBGWool as BBGWoolContract  
+  BBGWool as BBGWoolContract
 } from "../../generated/BBGWool/BBGWool"
+
+import {
+  BBGSheep as BBGSheepContract
+} from "../../generated/BBGSheep/BBGSheep"
+
+import {
+  BBGGarden as BBGGardenContract
+} from "../../generated/BBGGarden/BBGGarden"
 
 
 import {
@@ -30,11 +38,11 @@ export let bbgItemContract = BBGItemContract.bind(
   Address.fromString(FACTORY_BBGITEM_ADDRESS)
 );
 
-export let bbgSheepContract = BBGItemContract.bind(
+export let bbgSheepContract = BBGSheepContract.bind(
   Address.fromString(FACTORY_BBGSHEEP_ADDRESS)
 );
 
-export let bbgGardenContract = BBGItemContract.bind(
+export let bbgGardenContract = BBGGardenContract.bind(
   Address.fromString(FACTORY_BBGGARDEN_ADDRESS)
 );
 

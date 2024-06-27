@@ -26,6 +26,8 @@ type Token721List @entity {
   owner: Bytes! # address
   version: Int!
   colorID: String!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
 

@@ -69,12 +69,16 @@ export function handleTransfer1(event: Transfer1Event): void {
       token721List.transactionHash = transactionHash
       token721List.version = 1
       token721List.colorID = colorID
+      token721List.blockTimestamp = event.block.timestamp
+      token721List.blockNumber = event.block.number
       token721List.save()
   } else {
     token721List.owner = to
     token721List.transactionHash = transactionHash
     token721List.version = token721List.version + 1
     token721List.colorID = colorID
+    token721List.blockTimestamp = event.block.timestamp
+    token721List.blockNumber = event.block.number
     token721List.save()
   }
 }
