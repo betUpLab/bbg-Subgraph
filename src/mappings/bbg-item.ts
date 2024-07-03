@@ -53,6 +53,7 @@ export function handleTransferSingle(event: TransferEvent): void {
         entity.level = BigInt.fromString(i.toString())
         entity.graphicId = BigInt.fromString(j.toString())
         entity.name = names[i][j]
+        entity.isActivated = true
 
         let getUidCall = bbgItemContract.try_getUid(entity.catalogueId, entity.rarityId, BigInt.fromI32(i), BigInt.fromI32(j))
 
@@ -96,6 +97,7 @@ export function handleTransferSingle(event: TransferEvent): void {
             entity.id = getUidCall.value.toString()
           }
         }
+          entity.isActivated = true
           entity.save()
         }
       } 
