@@ -40,12 +40,21 @@ dataSources:
         file: ./src/mappings/bbg-item.ts
         entities:
           - TransferSingle
+          - GameItem
         abis:
           - name: BBGItem
             file: ./abis/BBGItem.json
         eventHandlers:
           - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
             handler: handleTransferSingle
+          - event: EventAddItem((uint16,uint16,uint16[],uint16[],string[][]))
+            handler: handleEventAddItem
+          - event: EventAddMoreItemGraphic(bytes32)
+            handler: handleEventAddMoreItemGraphic
+          - event: EventAddMoreItemLevel((uint16,uint16,uint16[],uint16[],string[][]))
+            handler: handleEventAddMoreItemLevel
+          - event: EventUpdateGraphic(bytes32)
+            handler: handleEventUpdateGraphic
   - kind: ethereum/contract
     name: BBGSheep
     network: testnet

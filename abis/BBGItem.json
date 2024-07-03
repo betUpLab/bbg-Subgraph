@@ -1,4 +1,5 @@
-[ {
+[
+  {
     "inputs": [],
     "name": "AccessControlBadConfirmation",
     "type": "error"
@@ -261,9 +262,9 @@
             "type": "uint16"
           },
           {
-            "internalType": "uint16",
-            "name": "maxLevelOrLevelAmount",
-            "type": "uint16"
+            "internalType": "uint16[]",
+            "name": "levels",
+            "type": "uint16[]"
           },
           {
             "internalType": "uint16[]",
@@ -314,9 +315,9 @@
             "type": "uint16"
           },
           {
-            "internalType": "uint16",
-            "name": "maxLevelOrLevelAmount",
-            "type": "uint16"
+            "internalType": "uint16[]",
+            "name": "levels",
+            "type": "uint16[]"
           },
           {
             "internalType": "uint16[]",
@@ -348,7 +349,7 @@
         "type": "bytes32"
       }
     ],
-    "name": "EventRemoveItem",
+    "name": "EventUpdateGraphic",
     "type": "event"
   },
   {
@@ -599,9 +600,9 @@
             "type": "uint16"
           },
           {
-            "internalType": "uint16",
-            "name": "maxLevelOrLevelAmount",
-            "type": "uint16"
+            "internalType": "uint16[]",
+            "name": "levels",
+            "type": "uint16[]"
           },
           {
             "internalType": "uint16[]",
@@ -619,7 +620,7 @@
         "type": "tuple"
       }
     ],
-    "name": "addItem",
+    "name": "addItemOfLevel",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -672,9 +673,9 @@
             "type": "uint16"
           },
           {
-            "internalType": "uint16",
-            "name": "maxLevelOrLevelAmount",
-            "type": "uint16"
+            "internalType": "uint16[]",
+            "name": "levels",
+            "type": "uint16[]"
           },
           {
             "internalType": "uint16[]",
@@ -861,6 +862,25 @@
     "inputs": [
       {
         "internalType": "bytes32",
+        "name": "_id",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getLevelIdsLen",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
         "name": "role",
         "type": "bytes32"
       }
@@ -1024,9 +1044,14 @@
         "internalType": "bytes32",
         "name": "",
         "type": "bytes32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
-    "name": "maxGraphics",
+    "name": "levelIds",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1045,7 +1070,7 @@
         "type": "bytes32"
       }
     ],
-    "name": "maxLevel",
+    "name": "maxGraphics",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1155,28 +1180,24 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_catalogueId",
+        "name": "",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_rarityId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_level",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_graphicId",
+        "name": "",
         "type": "uint256"
       }
     ],
-    "name": "removeItem",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "name": "rarities",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1411,6 +1432,39 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_catalogueId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_rarityId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_level",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_graphicId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_isActivated",
+        "type": "bool"
+      }
+    ],
+    "name": "updateGraphicStatus",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

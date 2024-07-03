@@ -66,3 +66,12 @@ type GardenSingle  @entity {
   transactionHash: Bytes!
 }
 
+type GameItem  @entity {
+  id: String!
+  catalogueId: BigInt!
+  rarityId: BigInt!
+  level: BigInt!
+  graphicId: BigInt!
+  name: String!
+  isActivated: Boolean!
+}
