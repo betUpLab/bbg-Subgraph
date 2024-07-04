@@ -21,6 +21,7 @@ import { bbgSheepContract, getSheepName } from "./helpers"
       entity.blockTimestamp = event.block.timestamp
       entity.transactionHash = event.transaction.hash
       entity.amount = BigInt.fromI32(1)
+      entity.type = "sheep"
 
       let tokenIdTraitCall = bbgSheepContract.try_tokenIdTrait(BigInt.fromString(entity.tokenId)); 
       if (!tokenIdTraitCall.reverted) {

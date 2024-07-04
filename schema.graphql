@@ -91,4 +91,5 @@ type AllItem  @entity {
   rarityId: BigInt!
   level: BigInt!
   graphicId: BigInt!
+  type: String!
 }

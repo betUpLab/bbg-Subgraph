@@ -24,7 +24,8 @@ export function handleTransferSingle(event: TransferEvent): void {
     entity.blockNumber = event.block.number
     entity.blockTimestamp = event.block.timestamp
     entity.transactionHash = event.transaction.hash
-    
+    entity.type = "tool"
+        
     let tokenIdTraitCall = bbgItemContract.try_tokenIdTrait(BigInt.fromString(entity.tokenId)); 
     if (!tokenIdTraitCall.reverted) {
         let catalogueId = BigInt.fromI32(tokenIdTraitCall.value.value0)
