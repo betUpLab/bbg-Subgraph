@@ -1,36 +1,45 @@
-import { ByteArray, Bytes , BigInt} from "@graphprotocol/graph-ts";
+import { ByteArray, Bytes , BigInt, ethereum} from "@graphprotocol/graph-ts";
 import {
     TransferSingle as TransferEvent,
     EventAddItem as GameItemEvent,
     EventAddMoreItemLevel as GameMoreItemEvent
+    // EventAddMoreItemGraphic as GameMoreItemGraphicEvent
   } from "../../generated/BBGItem/BBGItem"
   
   import {
-    TransferSingle,
+    AllItem,
     GameItem
   } from "../../generated/schema"
 import { bbgItemContract, getItemName } from "./helpers"
   
 export function handleTransferSingle(event: TransferEvent): void {
-    let entity = new TransferSingle(
+    let entity = new AllItem(
       event.transaction.hash.concatI32(event.logIndex.toI32())
     )
     entity.from = event.params.from
     entity.to = event.params.to
     entity.amount = event.params.value
     
-    entity.itemID = event.params.id.toString()
-    
-    entity.name = getItemName(event.params.id)
-    
-    entity.operator = event.params.operator
+    entity.tokenId = event.params.id.toString()    
     entity.blockNumber = event.block.number
     entity.blockTimestamp = event.block.timestamp
     entity.transactionHash = event.transaction.hash
+    
+    let tokenIdTraitCall = bbgItemContract.try_tokenIdTrait(BigInt.fromString(entity.tokenId)); 
+    if (!tokenIdTraitCall.reverted) {
+        let catalogueId = BigInt.fromI32(tokenIdTraitCall.value.value0)
+        let rarityId = BigInt.fromI32(tokenIdTraitCall.value.value1)
+        let levelId = BigInt.fromI32(tokenIdTraitCall.value.value2)
+        let graphicId = BigInt.fromI32(tokenIdTraitCall.value.value3)
+        entity.catalogueId = catalogueId
+        entity.rarityId = rarityId
+        entity.level = levelId
+        entity.graphicId = graphicId    
+    }
     entity.save()
   }
 
-  export function handleEventAddItem(event: GameItemEvent): void {
+export function handleEventAddItem(event: GameItemEvent): void {
     
     let temp = event.params.item
     let catalogueId = temp.catalogueId 
@@ -70,7 +79,7 @@ export function handleTransferSingle(event: TransferEvent): void {
     }
   }
 
-  export function handleEventAddMoreItemLevel(event: GameMoreItemEvent): void {
+export function handleEventAddMoreItemLevel(event: GameMoreItemEvent): void {
       let temp =  event.params.item
       let catalogueId = temp.catalogueId 
       let rarityId = temp.rarityId
@@ -109,4 +118,39 @@ export function handleTransferSingle(event: TransferEvent): void {
         }
       }
   }
+
+// export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): void {
+
+//   let inputValues = event.transaction.input;
+//   let methodId = inputValues.slice(0, 10);
+
+//   // 根据合约 ABI 获取方法签名
+//   let methodSignature = "(uint256,uint256,uint256,uint256,string[])";
+
+//   // 解码输入参数
+//   let decodedParams = ethereum.decode(methodSignature, inputValues);
+
+//   if (decodedParams != null) {
+//     let catalogueId = decodedParams.toTuple()[0].toBigInt();
+//     let rarityId = decodedParams.toTuple()[1].toBigInt();
+//     let level = decodedParams.toTuple()[2].toBigInt();
+//     let graphicAmount = decodedParams.toTuple()[3].toBigInt();
+//     let names = decodedParams.toTuple()[4].toStringArray();
+    
+    
+//     let entity = GameItem.load(event.params.uid.toHexString()) 
+
+//       if (entity == null) {
+//       entity = new GameItem(event.params.uid.toHexString())
+//       entity.catalogueId = catalogueId
+//       entity.rarityId = _rarityId
+//       entity.level = _level
+//       entity.graphicId = _graphicId
+//       entity.name = _name
+//       entity.isActivated = true
+//       entity.save()
+//       }
+//   }
+// } 
+
 

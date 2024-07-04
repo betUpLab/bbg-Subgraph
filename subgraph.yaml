@@ -39,7 +39,7 @@ dataSources:
         language: wasm/assemblyscript
         file: ./src/mappings/bbg-item.ts
         entities:
-          - TransferSingle
+          - AllItem
           - GameItem
         abis:
           - name: BBGItem
@@ -68,7 +68,7 @@ dataSources:
         language: wasm/assemblyscript
         file: ./src/mappings/bbg-sheep.ts
         entities:
-          - SheepSingle
+          - AllItem
         abis:
           - name: BBGSheep
             file: ./abis/BBGSheep.json
@@ -89,7 +89,7 @@ dataSources:
         language: wasm/assemblyscript
         file: ./src/mappings/bbg-garden.ts
         entities:
-          - GardenSingle
+          - AllItem
         abis:
           - name: BBGGarden
             file: ./abis/BBGGarden.json
