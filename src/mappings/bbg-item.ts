@@ -52,7 +52,7 @@ export function handleTransferSingle(event: TransferEvent): void {
         let getUidCall = bbgItemContract.try_getUid(_catalogueId, _rarityId, _level, _graphicId)
         if (!getUidCall.reverted) {
 
-          let uuid = getUidCall.value.toString()
+          let uuid = getUidCall.value.toHexString()
           let entity = GameItem.load(uuid) 
 
            if (entity == null) {
@@ -92,7 +92,7 @@ export function handleTransferSingle(event: TransferEvent): void {
           let getUidCall = bbgItemContract.try_getUid(_catalogueId, _rarityId, _level, _graphicId)
           if (!getUidCall.reverted) {
   
-            let uuid = getUidCall.value.toString()
+            let uuid = getUidCall.value.toHexString()
             let entity = GameItem.load(uuid) 
   
              if (entity == null) {
