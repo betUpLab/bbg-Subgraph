@@ -32,7 +32,7 @@ export function handleTransferSingle(event: TransferEvent): void {
 
   export function handleEventAddItem(event: GameItemEvent): void {
     
-    let temp =  event.params.item
+    let temp = event.params.item
     let catalogueId = temp.catalogueId 
     let rarityId = temp.rarityId
     let levels = temp.levels
@@ -41,14 +41,14 @@ export function handleTransferSingle(event: TransferEvent): void {
 
     for (let i = 0; i < levels.length; i++) {
       
-      for (let j = 0; j < maxGraphics.length; j++) {
+      for (let j = 0; j < maxGraphics[i]; j++) {
         
         let _catalogueId = BigInt.fromI32(catalogueId)
         let _rarityId = BigInt.fromI32(rarityId)
-        let _level = BigInt.fromI32(i)
-        let _graphicId = BigInt.fromI32(j)
+        let _level = BigInt.fromI32(levels[i])
+        let _graphicId = BigInt.fromI32(j+1)
         let _name = names[i][j]
-        
+ 
         let getUidCall = bbgItemContract.try_getUid(_catalogueId, _rarityId, _level, _graphicId)
         if (!getUidCall.reverted) {
 
@@ -81,14 +81,14 @@ export function handleTransferSingle(event: TransferEvent): void {
   
       for (let i = 0; i < levels.length; i++) {
       
-        for (let j = 0; j < maxGraphics.length; j++) {
+        for (let j = 0; j < maxGraphics[i]; j++) {
           
           let _catalogueId = BigInt.fromI32(catalogueId)
           let _rarityId = BigInt.fromI32(rarityId)
-          let _level = BigInt.fromI32(i)
-          let _graphicId = BigInt.fromI32(j)
+          let _level = BigInt.fromI32(levels[i])
+          let _graphicId = BigInt.fromI32(j+1)
           let _name = names[i][j]
-          
+   
           let getUidCall = bbgItemContract.try_getUid(_catalogueId, _rarityId, _level, _graphicId)
           if (!getUidCall.reverted) {
   
