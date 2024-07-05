@@ -30,9 +30,9 @@ dataSources:
     name: BBGItem
     network: testnet
     source:
-        address: "0xBd4137b99AB0671da8C666C8C358eEBEe007e06e"
+        address: "0xC3BB71C5CcFE51Ed47516F14aA4e041f0829C6Ae"
         abi: BBGItem
-        startBlock: 14954475
+        startBlock: 15116053
     mapping:
         kind: ethereum/events
         apiVersion: 0.0.6
