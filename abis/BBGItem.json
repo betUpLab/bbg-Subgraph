@@ -32,6 +32,31 @@
     "type": "error"
   },
   {
+    "inputs": [],
+    "name": "BBGItem_ErrorDuplicated",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BBGItem_ErrorInvalidOperator",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BBGItem_ErrorInvalidParameters",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BBGItem_ErrorInvalidSigner",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BBGItem_ErrorPermitDeadlineExpired",
+    "type": "error"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -147,31 +172,6 @@
   {
     "inputs": [],
     "name": "ERC1967NonPayable",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ErrorDuplicated",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ErrorInvalidOperator",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ErrorInvalidParameters",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ErrorInvalidSigner",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ErrorPermitDeadlineExpired",
     "type": "error"
   },
   {
@@ -350,6 +350,19 @@
       }
     ],
     "name": "EventUpdateGraphic",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "uid",
+        "type": "bytes32"
+      }
+    ],
+    "name": "EventUpdateGraphicName",
     "type": "event"
   },
   {
@@ -1432,6 +1445,39 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_catalogueId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_rarityId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_level",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_graphicId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_name",
+        "type": "string"
+      }
+    ],
+    "name": "updateGraphicName",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
