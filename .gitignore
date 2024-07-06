@@ -17,4 +17,6 @@ yarn-error.log*
 
 docker-compose.yml
 
+.yarn/
+
 
