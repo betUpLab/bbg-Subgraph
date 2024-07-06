@@ -64,3 +64,20 @@
 03:05:10.375803 db@open done T·24.555292ms
 14:10:01.221229 db@close closing
 14:10:01.223808 db@close done T·2.564625ms
+=============== Jul 6, 2024 (UTC) ===============
+05:13:54.074486 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+05:13:54.081165 CURRENT: missing target file: MANIFEST-000014
+05:13:54.081607 CURRENT.bak: missing target file: MANIFEST-000011
+=============== Jul 6, 2024 (UTC) ===============
+05:13:54.083458 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+05:13:54.084228 table@recovery F·2
+05:13:54.084475 table@recovery recovering @2
+05:13:54.086773 table@recovery recovered @2 Gk·12 Ck·0 Cb·0 S·1137 Q·12
+05:13:54.087049 table@recovery recovering @5
+05:13:54.087327 table@recovery recovered @5 Gk·6 Ck·0 Cb·0 S·1281 Q·19
+05:13:54.087488 table@recovery recovered F·2 N·18 Gk·18 Ck·0 Q·19
+05:13:54.092396 version@stat F·[2] S·2KiB[2KiB] Sc·[0.50]
+05:13:54.093167 db@open opening
+05:13:54.098301 version@stat F·[2] S·2KiB[2KiB] Sc·[0.50]
+05:13:54.107652 db@janitor F·4 G·0
+05:13:54.109668 db@open done T·14.64225ms
