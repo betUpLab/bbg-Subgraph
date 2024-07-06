@@ -5,6 +5,8 @@ generated/
 # Dependency directories
 node_modules/
 
+package-lock.json
+
 data/
 # Logs
 logs
@@ -15,4 +17,4 @@ yarn-error.log*
 
 docker-compose.yml
 
-package-lock.json
+

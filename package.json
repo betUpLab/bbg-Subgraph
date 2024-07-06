@@ -21,8 +21,5 @@
     "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@types/node": "^20.12.11",
     "ethers": "^6.12.1"
-  },
-  "overrides": {
-    "lru-cache": "^6.0.0"
   }
 }
