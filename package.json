@@ -5,7 +5,8 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "clear": "npm cache clean --force",
+    "clear": "rm -rf node_modules",
+    "clearLock": "rm package-lock.json",
     "docker": "docker-compose up -d",
     "dockers": "docker-compose stop",
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ subgraphBBG",
