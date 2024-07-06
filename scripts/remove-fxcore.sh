@@ -9,4 +9,4 @@ ipfsUrl="${TESTNET_GRAPH_IPFS_URL}"
 
 yarn
 
-npx graph remove --node "${graphNodeUrl}" $subgraphName
+npx @graphprotocol/graph-cli remove --node "${graphNodeUrl}" $subgraphName
