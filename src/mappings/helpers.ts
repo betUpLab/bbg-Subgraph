@@ -190,7 +190,7 @@ export function getMaxLevel(catalogueId: BigInt, rarityId: BigInt): BigInt {
       return levelId.value
     }
   }
-  return BigInt.fromI32(1); 
+  return BigInt.zero(); 
 }
 
 export function getMaxGraphics(catalogueId: BigInt, rarityId: BigInt, maxlevel: BigInt): BigInt {
@@ -202,5 +202,5 @@ export function getMaxGraphics(catalogueId: BigInt, rarityId: BigInt, maxlevel: 
       return graphicId.value;
     }
   }
-  return BigInt.fromI32(1); 
+  return BigInt.zero(); 
 }

@@ -135,24 +135,15 @@ export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): 
   entity.image = inputValues.toHexString();
   entity.graphicId = BigInt.fromI32(0);
  
-    // 假设事件的交易输入数据存储在event.transaction.input中
   let inputData = event.transaction.input;
-
   const encodedData = event.transaction.input;
   const types = '(uint256,uint256,uint256,uint256,string[])';
-
-  // 截取交易输入数据中实际的参数部分（去掉前面可能的前缀）
   const functionInput = encodedData.subarray(4);
-
-  // 添加"tuple"前缀
   const tuplePrefix = ByteArray.fromHexString('0x0000000000000000000000000000000000000000000000000000000000000020');
   const functionInputAsTuple = new Uint8Array(tuplePrefix.length + functionInput.length);
   functionInputAsTuple.set(tuplePrefix, 0);
   functionInputAsTuple.set(functionInput, tuplePrefix.length);
-
-  // 将组合后的字节数组转换为 Bytes 类型
   const tupleInputBytes = Bytes.fromUint8Array(functionInputAsTuple);
-
   // 进行解码
   const decodedData = ethereum.decode(types, tupleInputBytes);
   
@@ -165,36 +156,32 @@ export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): 
     let names = decodedData.toTuple()[4].toStringArray();
 
     entity.image = catalogueId.toString().concat(rarityId.toString()).concat(level.toString()).concat(graphicAmount.toString()).concat(names.join(","));
+    entity.save()
 
     for (let i = 0; i < graphicAmount.toI32(); i++) {
       
       let maxlevel =  getMaxLevel(catalogueId, rarityId)
       let _name = names[i]
-      i = i + 1
-      
-      let _graphicId = getMaxGraphics(catalogueId, rarityId, maxlevel).plus(BigInt.fromI32(i))
 
-      entity.description = _graphicId.toString().concat(_name)
+      let _graphicId = getMaxGraphics(catalogueId, rarityId, maxlevel).plus(BigInt.fromI32(i+1))
   
-      // let getUidCall = bbgItemContract.try_getUid(catalogueId, rarityId, level, _graphicId)
-      // if (!getUidCall.reverted) { 
-      //   let uuid = getUidCall.value.toHexString()
-      //   let gameItem = GameItem.load(uuid) 
-      //   if (entity == null) {
-      //     gameItem = new GameItem(uuid)
-      //     gameItem.catalogueId = catalogueId
-      //     gameItem.rarityId = rarityId
-      //     gameItem.level = level
-      //     gameItem.graphicId = _graphicId
-      //     gameItem.name = _name
-      //     gameItem.isActivated = true
-      //     gameItem.save()
-      //   }
-      // }
+      let getUidCall = bbgItemContract.try_getUid(catalogueId, rarityId, level, _graphicId)
+      if (!getUidCall.reverted) { 
+        let uuid = getUidCall.value.toHexString()
+        let gameItem = GameItem.load(uuid) 
+        if (gameItem == null) {
+          gameItem = new GameItem(uuid)
+          gameItem.catalogueId = catalogueId
+          gameItem.rarityId = rarityId
+          gameItem.level = level
+          gameItem.graphicId = _graphicId
+          gameItem.name = _name
+          gameItem.isActivated = true
+          gameItem.save()
+        }
+      }
     }
-  } else {
-    entity.image = "failed to decode"
   } 
-  entity.save()
+
 }
 
