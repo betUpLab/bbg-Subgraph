@@ -130,7 +130,7 @@ export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): 
   let inputValues = event.transaction.input;
   // let methodId = inputValues.slice(0, 10);
 
-  entity.name = inputValues.slice(10, 74).toString();
+  entity.name =  "unit" //inputValues.slice(10, 74).toString();
 
 
   // // 根据合约 ABI 获取方法签名
