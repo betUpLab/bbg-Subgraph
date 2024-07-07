@@ -41,6 +41,7 @@ dataSources:
         entities:
           - AllItem
           - GameItem
+          - MoreItemGraphic
         abis:
           - name: BBGItem
             file: ./abis/BBGItem.json

@@ -31,41 +31,6 @@ type Token721List @entity {
   transactionHash: Bytes!
 }
 
-# type TransferSingle @entity {
-#   id: Bytes!
-#   operator: Bytes! # address
-#   from: Bytes! # address
-#   to: Bytes! # address
-#   amount: BigInt! # uint256
-#   blockNumber: BigInt!
-#   blockTimestamp: BigInt!
-#   transactionHash: Bytes!
-#   itemID: String!
-#   name: String!
-# }
-
-# type SheepSingle  @entity {
-#   id: Bytes!
-#   from: Bytes! # address
-#   to: Bytes! # address
-#   tokenId: BigInt!
-#   name: String!
-#   blockNumber: BigInt!
-#   blockTimestamp: BigInt!
-#   transactionHash: Bytes!
-# }
-
-# type GardenSingle  @entity {
-#   id: Bytes!
-#   from: Bytes! # address
-#   to: Bytes! # address
-#   tokenId: BigInt!
-#   name: String!
-#   blockNumber: BigInt!
-#   blockTimestamp: BigInt!
-#   transactionHash: Bytes!
-# }
-
 type GameItem  @entity {
   id: String!
   catalogueId: BigInt!
@@ -92,4 +57,12 @@ type AllItem  @entity {
   level: BigInt!
   graphicId: BigInt!
   type: String!
+}
+
+type MoreItemGraphic @entity {
+  id: String!
+  graphicId: BigInt!
+  name: String!
+  description: String!
+  image: String!
 }

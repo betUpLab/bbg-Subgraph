@@ -8,7 +8,8 @@ import {
   
   import {
     AllItem,
-    GameItem
+    GameItem,
+    MoreItemGraphic
   } from "../../generated/schema"
 import { bbgItemContract, getItemName, getMaxGraphics } from "./helpers"
   
@@ -122,8 +123,15 @@ export function handleEventAddMoreItemLevel(event: GameMoreItemEvent): void {
 
 export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): void {
 
+  let entity = new MoreItemGraphic(
+    event.transaction.hash.toHexString().concat(event.logIndex.toString())
+  )
+
   let inputValues = event.transaction.input;
   let methodId = inputValues.slice(0, 10);
+
+  entity.name = inputValues.slice(10, 74).toString();
+
 
   // 根据合约 ABI 获取方法签名
   let methodSignature = "(uint256,uint256,uint256,uint256,string[])";
@@ -162,7 +170,16 @@ export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): 
          }
       } 
     }
+
+    entity.image = catalogueId.toHexString().concat(rarityId.toHexString()).concat(level.toHexString());
+  } else {
+    entity.description = "decoded unknown";
+    entity.image = inputValues.toHexString();
   }
+
+
+  entity.graphicId = BigInt.fromI32(0);
+  entity.save()
 } 
 
 
