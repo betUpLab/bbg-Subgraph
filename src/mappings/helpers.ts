@@ -178,3 +178,16 @@ export function getGardenName(tokenId: BigInt): string {
     }
   return "unknown";
 }
+
+
+export function getMaxGraphics(catalogueId: BigInt, rarityId: BigInt, levelId: BigInt): BigInt {
+  
+  let maxGraphicsCall = bbgItemContract.try_getIdOfGraphics(catalogueId, rarityId, levelId);
+  if (!maxGraphicsCall.reverted) {
+    let graphicId = bbgGardenContract.try_maxGraphics(maxGraphicsCall.value);
+    if (!graphicId.reverted) {
+      return graphicId.value.plus(BigInt.fromI32(1));
+    }
+  }
+  return BigInt.fromI32(1); 
+}

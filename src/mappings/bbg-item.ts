@@ -2,15 +2,15 @@ import { ByteArray, Bytes , BigInt, ethereum} from "@graphprotocol/graph-ts";
 import {
     TransferSingle as TransferEvent,
     EventAddItem as GameItemEvent,
-    EventAddMoreItemLevel as GameMoreItemEvent
-    // EventAddMoreItemGraphic as GameMoreItemGraphicEvent
+    EventAddMoreItemLevel as GameMoreItemEvent,
+    EventAddMoreItemGraphic as GameMoreItemGraphicEvent
   } from "../../generated/BBGItem/BBGItem"
   
   import {
     AllItem,
     GameItem
   } from "../../generated/schema"
-import { bbgItemContract, getItemName } from "./helpers"
+import { bbgItemContract, getItemName, getMaxGraphics } from "./helpers"
   
 export function handleTransferSingle(event: TransferEvent): void {
     let entity = new AllItem(
@@ -96,7 +96,7 @@ export function handleEventAddMoreItemLevel(event: GameMoreItemEvent): void {
           let _catalogueId = BigInt.fromI32(catalogueId)
           let _rarityId = BigInt.fromI32(rarityId)
           let _level = BigInt.fromI32(levels[i])
-          let _graphicId = BigInt.fromI32(j+1)
+          let _graphicId = getMaxGraphics(_catalogueId, _rarityId, _level).plus(BigInt.fromI32(j))
           let _name = names[i][j]
    
           let getUidCall = bbgItemContract.try_getUid(_catalogueId, _rarityId, _level, _graphicId)
@@ -120,38 +120,49 @@ export function handleEventAddMoreItemLevel(event: GameMoreItemEvent): void {
       }
   }
 
-// export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): void {
+export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): void {
 
-//   let inputValues = event.transaction.input;
-//   let methodId = inputValues.slice(0, 10);
+  let inputValues = event.transaction.input;
+  let methodId = inputValues.slice(0, 10);
 
-//   // 根据合约 ABI 获取方法签名
-//   let methodSignature = "(uint256,uint256,uint256,uint256,string[])";
+  // 根据合约 ABI 获取方法签名
+  let methodSignature = "(uint256,uint256,uint256,uint256,string[])";
 
-//   // 解码输入参数
-//   let decodedParams = ethereum.decode(methodSignature, inputValues);
+  // 解码输入参数
+  let decodedParams = ethereum.decode(methodSignature, inputValues);
 
-//   if (decodedParams != null) {
-//     let catalogueId = decodedParams.toTuple()[0].toBigInt();
-//     let rarityId = decodedParams.toTuple()[1].toBigInt();
-//     let level = decodedParams.toTuple()[2].toBigInt();
-//     let graphicAmount = decodedParams.toTuple()[3].toBigInt();
-//     let names = decodedParams.toTuple()[4].toStringArray();
+  if (decodedParams != null) {
+    let catalogueId = decodedParams.toTuple()[0].toBigInt();
+    let rarityId = decodedParams.toTuple()[1].toBigInt();
+    let level = decodedParams.toTuple()[2].toBigInt();
+    let graphicAmount = decodedParams.toTuple()[3].toBigInt();
+    let names = decodedParams.toTuple()[4].toStringArray();
     
-    
-//     let entity = GameItem.load(event.params.uid.toHexString()) 
+    for (let j = 0; j < graphicAmount.toI32(); j++) {
+        
+      let _graphicId = getMaxGraphics(catalogueId, rarityId, level).plus(BigInt.fromI32(j))
 
-//       if (entity == null) {
-//       entity = new GameItem(event.params.uid.toHexString())
-//       entity.catalogueId = catalogueId
-//       entity.rarityId = _rarityId
-//       entity.level = _level
-//       entity.graphicId = _graphicId
-//       entity.name = _name
-//       entity.isActivated = true
-//       entity.save()
-//       }
-//   }
-// } 
+      let _name = names[j]
+
+      let getUidCall = bbgItemContract.try_getUid(catalogueId, rarityId, level, _graphicId)
+      if (!getUidCall.reverted) {
+
+        let uuid = getUidCall.value.toHexString()
+        let entity = GameItem.load(uuid) 
+
+         if (entity == null) {
+          entity = new GameItem(uuid)
+          entity.catalogueId = catalogueId
+          entity.rarityId = rarityId
+          entity.level = level
+          entity.graphicId = _graphicId
+          entity.name = _name
+          entity.isActivated = true
+          entity.save()
+         }
+      } 
+    }
+  }
+} 
 
 

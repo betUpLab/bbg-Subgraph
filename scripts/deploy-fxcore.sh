@@ -7,8 +7,8 @@ graphNodePubUrl="https://testnet-graph-node.functionx.io"
 graphNodeUrl="${TESTNET_GRAPH_NODE_URL}"
 ipfsUrl="${TESTNET_GRAPH_IPFS_URL}"
 
-npm install
-npm run codegen
+yarn
+yarn codegen
 npx graph build
 
 # echo "Deploying to Graph node"

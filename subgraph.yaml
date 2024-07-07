@@ -49,8 +49,8 @@ dataSources:
             handler: handleTransferSingle
           - event: EventAddItem((uint16,uint16,uint16[],uint16[],string[][]))
             handler: handleEventAddItem
-          # - event: EventAddMoreItemGraphic(bytes32)
-          #   handler: handleEventAddMoreItemGraphic
+          - event: EventAddMoreItemGraphic(bytes32)
+            handler: handleEventAddMoreItemGraphic
           - event: EventAddMoreItemLevel((uint16,uint16,uint16[],uint16[],string[][]))
             handler: handleEventAddMoreItemLevel
           # - event: EventUpdateGraphic(bytes32)
