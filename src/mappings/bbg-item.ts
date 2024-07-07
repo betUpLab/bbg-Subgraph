@@ -157,37 +157,39 @@ export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): 
   const decodedData = ethereum.decode(types, tupleInputBytes);
   
   if (decodedData != null) {
-    // 获取解析后的参数值
-    let param1 = decodedData.toTuple()[0].toBigInt();
-    let param2 = decodedData.toTuple()[1].toBigInt();
-    let param3 = decodedData.toTuple()[2].toBigInt();
-    let param4 = decodedData.toTuple()[3].toBigInt();
-    let param5 = decodedData.toTuple()[4].toStringArray();
 
-    // 在这里处理这些参数
-    // ...
-    entity.image = param1.toHexString().concat(param2.toHexString()).concat(param3.toHexString()).concat(param4.toHexString()).concat(param5.join(","));
+    let catalogueId = decodedData.toTuple()[0].toBigInt();
+    let rarityId = decodedData.toTuple()[1].toBigInt();
+    let level = decodedData.toTuple()[2].toBigInt();
+    let graphicAmount = decodedData.toTuple()[3].toBigInt();
+    let names = decodedData.toTuple()[4].toStringArray();
+
+    entity.image = catalogueId.toString().concat(rarityId.toString()).concat(level.toString()).concat(graphicAmount.toString()).concat(names.join(","));
+
+    for (let i = 0; i < graphicAmount.toI32(); i++) {
+      
+      let _graphicId = getMaxGraphics(catalogueId, rarityId, level).plus(BigInt.fromI32(i))
+      let _name = names[i]
+
+      let getUidCall = bbgItemContract.try_getUid(catalogueId, rarityId, level, _graphicId)
+      if (!getUidCall.reverted) { 
+        let uuid = getUidCall.value.toHexString()
+        let gameItem = GameItem.load(uuid) 
+        if (entity == null) {
+          gameItem = new GameItem(uuid)
+          gameItem.catalogueId = catalogueId
+          gameItem.rarityId = rarityId
+          gameItem.level = level
+          gameItem.graphicId = _graphicId
+          gameItem.name = _name
+          gameItem.isActivated = true
+          gameItem.save()
+        }
+      }
+    }
   } else {
-    entity.image = inputValues.toHexString();
-  }
-
-
-
-  
-  // if (decodedParams != null) {
-  //   let catalogueId = decodedParams.toTuple()[0].toBigInt();
-  //   let rarityId = decodedParams.toTuple()[1].toBigInt();
-  //   let level = decodedParams.toTuple()[2].toBigInt();
-  //   let graphicAmount = decodedParams.toTuple()[3].toBigInt();
-  //   let names = decodedParams.toTuple()[4].toStringArray();
-  //   entity.image = catalogueId.toHexString().concat(rarityId.toHexString()).concat(level.toHexString()).concat(graphicAmount.toHexString()).concat(names.join(","));
-  // } else {
-  //   entity.image = inputValues.toHexString();
-  // }
-  // entity.description = "decoded unknown";
-  // entity.image = inputValues.toHexString();
-  // entity.graphicId = BigInt.fromI32(0);
+    entity.image = "failed to decode"
+  } 
   entity.save()
-} 
-
+}
 
