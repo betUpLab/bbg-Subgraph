@@ -135,20 +135,27 @@ export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): 
   entity.image = inputValues.toHexString();
   entity.graphicId = BigInt.fromI32(0);
  
-
-  
     // 假设事件的交易输入数据存储在event.transaction.input中
   let inputData = event.transaction.input;
 
-  // 将Uint8Array类型转换为Bytes类型
-  let methodParams = Bytes.fromUint8Array(inputData.slice(10));
+  const encodedData = event.transaction.input;
+  const types = '(uint256,uint256,uint256,uint256,string[])';
 
-  // 使用ethereum.decode方法解析输入数据
-  let decodedData = ethereum.decode(
-    "(uint256,uint256,uint256,uint256,string[])",
-    methodParams
-  );
+  // 截取交易输入数据中实际的参数部分（去掉前面可能的前缀）
+  const functionInput = encodedData.subarray(4);
 
+  // 添加"tuple"前缀
+  const tuplePrefix = ByteArray.fromHexString('0x0000000000000000000000000000000000000000000000000000000000000020');
+  const functionInputAsTuple = new Uint8Array(tuplePrefix.length + functionInput.length);
+  functionInputAsTuple.set(tuplePrefix, 0);
+  functionInputAsTuple.set(functionInput, tuplePrefix.length);
+
+  // 将组合后的字节数组转换为 Bytes 类型
+  const tupleInputBytes = Bytes.fromUint8Array(functionInputAsTuple);
+
+  // 进行解码
+  const decodedData = ethereum.decode(types, tupleInputBytes);
+  
   if (decodedData != null) {
     // 获取解析后的参数值
     let param1 = decodedData.toTuple()[0].toBigInt();
@@ -165,6 +172,8 @@ export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): 
   }
 
 
+
+  
   // if (decodedParams != null) {
   //   let catalogueId = decodedParams.toTuple()[0].toBigInt();
   //   let rarityId = decodedParams.toTuple()[1].toBigInt();
