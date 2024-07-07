@@ -128,56 +128,56 @@ export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): 
   )
 
   let inputValues = event.transaction.input;
-  let methodId = inputValues.slice(0, 10);
+  // let methodId = inputValues.slice(0, 10);
 
   entity.name = inputValues.slice(10, 74).toString();
 
 
-  // 根据合约 ABI 获取方法签名
-  let methodSignature = "(uint256,uint256,uint256,uint256,string[])";
+  // // 根据合约 ABI 获取方法签名
+  // let methodSignature = "(uint256,uint256,uint256,uint256,string[])";
 
-  // 解码输入参数
-  let decodedParams = ethereum.decode(methodSignature, inputValues);
+  // // 解码输入参数
+  // let decodedParams = ethereum.decode(methodSignature, inputValues);
 
-  if (decodedParams != null) {
-    let catalogueId = decodedParams.toTuple()[0].toBigInt();
-    let rarityId = decodedParams.toTuple()[1].toBigInt();
-    let level = decodedParams.toTuple()[2].toBigInt();
-    let graphicAmount = decodedParams.toTuple()[3].toBigInt();
-    let names = decodedParams.toTuple()[4].toStringArray();
+  // if (decodedParams != null) {
+  //   let catalogueId = decodedParams.toTuple()[0].toBigInt();
+  //   let rarityId = decodedParams.toTuple()[1].toBigInt();
+  //   let level = decodedParams.toTuple()[2].toBigInt();
+  //   let graphicAmount = decodedParams.toTuple()[3].toBigInt();
+  //   let names = decodedParams.toTuple()[4].toStringArray();
     
-    for (let j = 0; j < graphicAmount.toI32(); j++) {
+  //   for (let j = 0; j < graphicAmount.toI32(); j++) {
         
-      let _graphicId = getMaxGraphics(catalogueId, rarityId, level).plus(BigInt.fromI32(j))
+  //     let _graphicId = getMaxGraphics(catalogueId, rarityId, level).plus(BigInt.fromI32(j))
 
-      let _name = names[j]
+  //     let _name = names[j]
 
-      let getUidCall = bbgItemContract.try_getUid(catalogueId, rarityId, level, _graphicId)
-      if (!getUidCall.reverted) {
+  //     let getUidCall = bbgItemContract.try_getUid(catalogueId, rarityId, level, _graphicId)
+  //     if (!getUidCall.reverted) {
 
-        let uuid = getUidCall.value.toHexString()
-        let entity = GameItem.load(uuid) 
+  //       let uuid = getUidCall.value.toHexString()
+  //       let entity = GameItem.load(uuid) 
 
-         if (entity == null) {
-          entity = new GameItem(uuid)
-          entity.catalogueId = catalogueId
-          entity.rarityId = rarityId
-          entity.level = level
-          entity.graphicId = _graphicId
-          entity.name = _name
-          entity.isActivated = true
-          entity.save()
-         }
-      } 
-    }
+  //        if (entity == null) {
+  //         entity = new GameItem(uuid)
+  //         entity.catalogueId = catalogueId
+  //         entity.rarityId = rarityId
+  //         entity.level = level
+  //         entity.graphicId = _graphicId
+  //         entity.name = _name
+  //         entity.isActivated = true
+  //         entity.save()
+  //        }
+  //     } 
+  //   }
 
-    entity.image = catalogueId.toHexString().concat(rarityId.toHexString()).concat(level.toHexString());
-  } else {
-    entity.description = "decoded unknown";
-    entity.image = inputValues.toHexString();
-  }
-
-
+  //   entity.image = catalogueId.toHexString().concat(rarityId.toHexString()).concat(level.toHexString());
+  // } else {
+  //   entity.description = "decoded unknown";
+  //   entity.image = inputValues.toHexString();
+  // }
+  entity.description = "decoded unknown";
+  entity.image = inputValues.toHexString();
   entity.graphicId = BigInt.fromI32(0);
   entity.save()
 } 
