@@ -132,30 +132,30 @@ export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): 
 
   entity.name =  event.params.uid.toHexString();
   entity.description = "decoded unknown";
-  // entity.image = inputValues.toHexString();
+  entity.image = inputValues.toHexString();
   entity.graphicId = BigInt.fromI32(0);
  
 
 
   // // 根据合约 ABI 获取方法签名
-  let methodSignature = "(uint256,uint256,uint256,uint256,string[])";
+  // let methodSignature = "(uint256,uint256,uint256,uint256,string[])";
 
-  // 解码输入参数
-  let decodedParams = ethereum.decode(methodSignature, inputValues);
+  // // 解码输入参数
+  // let decodedParams = ethereum.decode(methodSignature, inputValues);
 
-  if (decodedParams != null) {
-    let catalogueId = decodedParams.toTuple()[0].toBigInt();
-    let rarityId = decodedParams.toTuple()[1].toBigInt();
-    let level = decodedParams.toTuple()[2].toBigInt();
-    let graphicAmount = decodedParams.toTuple()[3].toBigInt();
-    let names = decodedParams.toTuple()[4].toStringArray();
+  // if (decodedParams != null) {
+  //   let catalogueId = decodedParams.toTuple()[0].toBigInt();
+  //   let rarityId = decodedParams.toTuple()[1].toBigInt();
+  //   let level = decodedParams.toTuple()[2].toBigInt();
+  //   let graphicAmount = decodedParams.toTuple()[3].toBigInt();
+  //   let names = decodedParams.toTuple()[4].toStringArray();
     
 
-    entity.image = catalogueId.toHexString().concat(rarityId.toHexString()).concat(level.toHexString()).concat(graphicAmount.toHexString()).concat(names.join(","));
-  } else {
-    entity.description = "decoded unknown";
-    entity.image = inputValues.toHexString();
-  }
+  //   entity.image = catalogueId.toHexString().concat(rarityId.toHexString()).concat(level.toHexString()).concat(graphicAmount.toHexString()).concat(names.join(","));
+  // } else {
+  //   entity.description = "decoded unknown";
+  //   entity.image = inputValues.toHexString();
+  // }
   // entity.description = "decoded unknown";
   // entity.image = inputValues.toHexString();
   // entity.graphicId = BigInt.fromI32(0);
