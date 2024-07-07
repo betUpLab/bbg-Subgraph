@@ -136,23 +136,45 @@ export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): 
   entity.graphicId = BigInt.fromI32(0);
  
 
+  
+    // 假设事件的交易输入数据存储在event.transaction.input中
+  let inputData = event.transaction.input;
 
-  // // 根据合约 ABI 获取方法签名
-  let methodSignature = "(uint256,uint256,uint256,uint256,string[])";
+  // 将Uint8Array类型转换为Bytes类型
+  let methodParams = Bytes.fromUint8Array(inputData.slice(10));
 
-  // // 解码输入参数
-  let decodedParams = ethereum.decode(methodSignature, inputValues);
+  // 使用ethereum.decode方法解析输入数据
+  let decodedData = ethereum.decode(
+    "(uint256,uint256,uint256,uint256,string[])",
+    methodParams
+  );
 
-  if (decodedParams != null) {
-    let catalogueId = decodedParams.toTuple()[0].toBigInt();
-    let rarityId = decodedParams.toTuple()[1].toBigInt();
-    let level = decodedParams.toTuple()[2].toBigInt();
-    let graphicAmount = decodedParams.toTuple()[3].toBigInt();
-    let names = decodedParams.toTuple()[4].toStringArray();
-    entity.image = catalogueId.toHexString().concat(rarityId.toHexString()).concat(level.toHexString()).concat(graphicAmount.toHexString()).concat(names.join(","));
+  if (decodedData != null) {
+    // 获取解析后的参数值
+    let param1 = decodedData.toTuple()[0].toBigInt();
+    let param2 = decodedData.toTuple()[1].toBigInt();
+    let param3 = decodedData.toTuple()[2].toBigInt();
+    let param4 = decodedData.toTuple()[3].toBigInt();
+    let param5 = decodedData.toTuple()[4].toStringArray();
+
+    // 在这里处理这些参数
+    // ...
+    entity.image = param1.toHexString().concat(param2.toHexString()).concat(param3.toHexString()).concat(param4.toHexString()).concat(param5.join(","));
   } else {
     entity.image = inputValues.toHexString();
   }
+
+
+  // if (decodedParams != null) {
+  //   let catalogueId = decodedParams.toTuple()[0].toBigInt();
+  //   let rarityId = decodedParams.toTuple()[1].toBigInt();
+  //   let level = decodedParams.toTuple()[2].toBigInt();
+  //   let graphicAmount = decodedParams.toTuple()[3].toBigInt();
+  //   let names = decodedParams.toTuple()[4].toStringArray();
+  //   entity.image = catalogueId.toHexString().concat(rarityId.toHexString()).concat(level.toHexString()).concat(graphicAmount.toHexString()).concat(names.join(","));
+  // } else {
+  //   entity.image = inputValues.toHexString();
+  // }
   // entity.description = "decoded unknown";
   // entity.image = inputValues.toHexString();
   // entity.graphicId = BigInt.fromI32(0);
