@@ -174,21 +174,23 @@ export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): 
       
       let _graphicId = getMaxGraphics(catalogueId, rarityId, maxlevel).plus(BigInt.fromI32(i))
 
-      let getUidCall = bbgItemContract.try_getUid(catalogueId, rarityId, level, _graphicId)
-      if (!getUidCall.reverted) { 
-        let uuid = getUidCall.value.toHexString()
-        let gameItem = GameItem.load(uuid) 
-        if (entity == null) {
-          gameItem = new GameItem(uuid)
-          gameItem.catalogueId = catalogueId
-          gameItem.rarityId = rarityId
-          gameItem.level = level
-          gameItem.graphicId = _graphicId
-          gameItem.name = _name
-          gameItem.isActivated = true
-          gameItem.save()
-        }
-      }
+      entity.description = _graphicId.toString().concat(_name)
+  
+      // let getUidCall = bbgItemContract.try_getUid(catalogueId, rarityId, level, _graphicId)
+      // if (!getUidCall.reverted) { 
+      //   let uuid = getUidCall.value.toHexString()
+      //   let gameItem = GameItem.load(uuid) 
+      //   if (entity == null) {
+      //     gameItem = new GameItem(uuid)
+      //     gameItem.catalogueId = catalogueId
+      //     gameItem.rarityId = rarityId
+      //     gameItem.level = level
+      //     gameItem.graphicId = _graphicId
+      //     gameItem.name = _name
+      //     gameItem.isActivated = true
+      //     gameItem.save()
+      //   }
+      // }
     }
   } else {
     entity.image = "failed to decode"
