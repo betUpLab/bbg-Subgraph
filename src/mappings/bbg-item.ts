@@ -97,7 +97,7 @@ export function handleEventAddMoreItemLevel(event: GameMoreItemEvent): void {
           let _catalogueId = BigInt.fromI32(catalogueId)
           let _rarityId = BigInt.fromI32(rarityId)
           let _level = BigInt.fromI32(levels[i])
-          let _graphicId = getMaxGraphics(_catalogueId, _rarityId, _level).plus(BigInt.fromI32(j))
+          let _graphicId = BigInt.fromI32(j+1)//getMaxGraphics(_catalogueId, _rarityId, _level).plus(BigInt.fromI32(j))
           let _name = names[i][j]
    
           let getUidCall = bbgItemContract.try_getUid(_catalogueId, _rarityId, _level, _graphicId)
@@ -127,10 +127,14 @@ export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): 
     event.transaction.hash.toHexString().concat(event.logIndex.toString())
   )
 
-  let inputValues = event.transaction.input;
+  // let inputValues = event.transaction.input;
   // let methodId = inputValues.slice(0, 10);
 
-  entity.name =  "unit" //inputValues.slice(10, 74).toString();
+  entity.name =  event.params.uid.toHexString();
+  entity.description = "decoded unknown";
+  entity.image = "" //inputValues.toHexString();
+  entity.graphicId = BigInt.fromI32(0);
+  entity.save()
 
 
   // // 根据合约 ABI 获取方法签名
@@ -176,10 +180,10 @@ export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): 
   //   entity.description = "decoded unknown";
   //   entity.image = inputValues.toHexString();
   // }
-  entity.description = "decoded unknown";
-  entity.image = inputValues.toHexString();
-  entity.graphicId = BigInt.fromI32(0);
-  entity.save()
+  // entity.description = "decoded unknown";
+  // entity.image = inputValues.toHexString();
+  // entity.graphicId = BigInt.fromI32(0);
+  // entity.save()
 } 
 
 
