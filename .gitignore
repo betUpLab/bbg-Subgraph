@@ -18,5 +18,3 @@ yarn-error.log*
 docker-compose.yml
 
 .yarn/
-
-yarn.lock
