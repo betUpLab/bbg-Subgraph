@@ -11,7 +11,7 @@ import {
     GameItem,
     MoreItemGraphic
   } from "../../generated/schema"
-import { bbgItemContract, getItemName, getMaxGraphics } from "./helpers"
+import { bbgItemContract, getItemName, getMaxGraphics, getMaxLevel } from "./helpers"
   
 export function handleTransferSingle(event: TransferEvent): void {
     let entity = new AllItem(
@@ -168,8 +168,11 @@ export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): 
 
     for (let i = 0; i < graphicAmount.toI32(); i++) {
       
-      let _graphicId = getMaxGraphics(catalogueId, rarityId, level).plus(BigInt.fromI32(i))
+      let maxlevel =  getMaxLevel(catalogueId, rarityId)
       let _name = names[i]
+      i = i + 1
+      
+      let _graphicId = getMaxGraphics(catalogueId, rarityId, maxlevel).plus(BigInt.fromI32(i))
 
       let getUidCall = bbgItemContract.try_getUid(catalogueId, rarityId, level, _graphicId)
       if (!getUidCall.reverted) { 

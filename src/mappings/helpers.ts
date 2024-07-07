@@ -180,13 +180,26 @@ export function getGardenName(tokenId: BigInt): string {
 }
 
 
-export function getMaxGraphics(catalogueId: BigInt, rarityId: BigInt, levelId: BigInt): BigInt {
+export function getMaxLevel(catalogueId: BigInt, rarityId: BigInt): BigInt { 
+
+  let maxlevelCall = bbgItemContract.try_getIdOfLevel(catalogueId, rarityId);
+  if (!maxlevelCall.reverted) {
+    let levelId = bbgGardenContract.try_getLevelIdsLen(maxlevelCall.value);
+
+    if (!levelId.reverted) {
+      return levelId.value
+    }
+  }
+  return BigInt.fromI32(1); 
+}
+
+export function getMaxGraphics(catalogueId: BigInt, rarityId: BigInt, maxlevel: BigInt): BigInt {
   
-  let maxGraphicsCall = bbgItemContract.try_getIdOfGraphics(catalogueId, rarityId, levelId);
+  let maxGraphicsCall = bbgItemContract.try_getIdOfGraphics(catalogueId, rarityId, maxlevel);
   if (!maxGraphicsCall.reverted) {
     let graphicId = bbgGardenContract.try_maxGraphics(maxGraphicsCall.value);
     if (!graphicId.reverted) {
-      return graphicId.value.plus(BigInt.fromI32(1));
+      return graphicId.value;
     }
   }
   return BigInt.fromI32(1); 
