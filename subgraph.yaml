@@ -30,9 +30,9 @@ dataSources:
     name: BBGItem
     network: testnet
     source:
-        address: "0xC3BB71C5CcFE51Ed47516F14aA4e041f0829C6Ae"
+        address: "0xb42b50B1A55B75202D08EBa96220c97798e61DA6"
         abi: BBGItem
-        startBlock: 15116053
+        startBlock: 15164426
     mapping:
         kind: ethereum/events
         apiVersion: 0.0.6
@@ -60,9 +60,9 @@ dataSources:
     name: BBGSheep
     network: testnet
     source:
-        address: "0x0e8FB933D9Ff31377de74baC64Bb4e3cf928Cb3f"
+        address: "0x6D74CbF1BDd9F7BE8BA6C80A0c9121114d5273D0"
         abi: BBGSheep
-        startBlock: 14954551
+        startBlock: 15164513
     mapping:
         kind: ethereum/events
         apiVersion: 0.0.6
@@ -81,9 +81,9 @@ dataSources:
     name: BBGGarden
     network: testnet
     source:
-        address: "0x40dD352D7628d43DE836bE48Dca290D4C0955A42"
+        address: "0xAB119CF325d72EF63d8491c29CC3B4A1520b72D0"
         abi: BBGGarden
-        startBlock: 14954529
+        startBlock: 15164494
     mapping:
         kind: ethereum/events
         apiVersion: 0.0.6

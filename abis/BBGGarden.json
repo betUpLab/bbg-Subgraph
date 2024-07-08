@@ -32,6 +32,69 @@
     "type": "error"
   },
   {
+    "inputs": [],
+    "name": "BBGGarden_ErrorDuplicated",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BBGGarden_ErrorInvalidOperator",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BBGGarden_ErrorInvalidParameters",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BBGGarden_ErrorInvalidSigner",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint16",
+            "name": "catalogue",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "rarityId",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "level",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "graphicId",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint192",
+            "name": "_slot",
+            "type": "uint192"
+          }
+        ],
+        "internalType": "struct BBGGarden.Trait",
+        "name": "trait",
+        "type": "tuple"
+      }
+    ],
+    "name": "BBGGarden_ErrorInvalidTrait",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BBGGarden_ErrorPermitDeadlineExpired",
+    "type": "error"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -148,31 +211,6 @@
       }
     ],
     "name": "ERC721NonexistentToken",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ErrorDuplicated",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ErrorInvalidOperator",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ErrorInvalidParameters",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ErrorInvalidSigner",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ErrorPermitDeadlineExpired",
     "type": "error"
   },
   {
@@ -367,6 +405,19 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "bytes32",
+        "name": "uid",
+        "type": "bytes32"
+      }
+    ],
+    "name": "EventUpdateGraphicName",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "uint64",
         "name": "version",
         "type": "uint64"
@@ -522,6 +573,49 @@
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "activatedGraphics",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "graphicId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "activatedGraphicsLength",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1488,6 +1582,39 @@
       }
     ],
     "name": "transferFrom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_catalogueId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_rarityId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_level",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_graphicId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_name",
+        "type": "string"
+      }
+    ],
+    "name": "updateGraphicName",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
