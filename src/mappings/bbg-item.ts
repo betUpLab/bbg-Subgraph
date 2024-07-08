@@ -198,6 +198,6 @@ export function computeCatalogueItemHash(catalogueId: BigInt, rarityId: BigInt):
   ]
   let tuple = tupleArray as ethereum.Tuple
   let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
-  return Bytes.fromByteArray(crypto.keccak256(encoded))
+  return encoded
 }
 
