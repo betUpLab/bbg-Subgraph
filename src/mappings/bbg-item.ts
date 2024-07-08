@@ -155,7 +155,7 @@ export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): 
     let graphicAmount = decodedData.toTuple()[3].toBigInt();
     let names = decodedData.toTuple()[4].toStringArray();
 
-    entity.description = computeCatalogueItemHash(catalogueId, rarityId).toHexString();
+    // entity.description = computeCatalogueItemHash(catalogueId, rarityId).toHexString();
 
     entity.image = catalogueId.toString().concat(rarityId.toString()).concat(level.toString()).concat(graphicAmount.toString()).concat(names.join(","));
     entity.save()
