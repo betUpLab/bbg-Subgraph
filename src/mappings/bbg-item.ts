@@ -1,4 +1,4 @@
-import { ByteArray, Bytes , BigInt, ethereum} from "@graphprotocol/graph-ts";
+import { ByteArray, Bytes , BigInt, ethereum, crypto, Value} from "@graphprotocol/graph-ts";
 import {
     TransferSingle as TransferEvent,
     EventAddItem as GameItemEvent,
@@ -155,33 +155,49 @@ export function handleEventAddMoreItemGraphic(event: GameMoreItemGraphicEvent): 
     let graphicAmount = decodedData.toTuple()[3].toBigInt();
     let names = decodedData.toTuple()[4].toStringArray();
 
+    entity.description = computeCatalogueItemHash(catalogueId, rarityId).toHexString();
+
     entity.image = catalogueId.toString().concat(rarityId.toString()).concat(level.toString()).concat(graphicAmount.toString()).concat(names.join(","));
     entity.save()
 
-    for (let i = 0; i < graphicAmount.toI32(); i++) {
+    // for (let i = 0; i < graphicAmount.toI32(); i++) {
       
-      let maxlevel =  getMaxLevel(catalogueId, rarityId)
-      let _name = names[i]
+    //   let maxlevel =  getMaxLevel(catalogueId, rarityId)
+    //   let _name = names[i]
 
-      let _graphicId = getMaxGraphics(catalogueId, rarityId, maxlevel).plus(BigInt.fromI32(i+1))
+    //   let _graphicId = getMaxGraphics(catalogueId, rarityId, maxlevel).plus(BigInt.fromI32(i+1))
   
-      let getUidCall = bbgItemContract.try_getUid(catalogueId, rarityId, level, _graphicId)
-      if (!getUidCall.reverted) { 
-        let uuid = getUidCall.value.toHexString()
-        let gameItem = GameItem.load(uuid) 
-        if (gameItem == null) {
-          gameItem = new GameItem(uuid)
-          gameItem.catalogueId = catalogueId
-          gameItem.rarityId = rarityId
-          gameItem.level = level
-          gameItem.graphicId = _graphicId
-          gameItem.name = _name
-          gameItem.isActivated = true
-          gameItem.save()
-        }
-      }
-    }
+    //   let getUidCall = bbgItemContract.try_getUid(catalogueId, rarityId, level, _graphicId)
+    //   if (!getUidCall.reverted) { 
+    //     let uuid = getUidCall.value.toHexString()
+    //     let gameItem = GameItem.load(uuid) 
+    //     if (gameItem == null) {
+    //       gameItem = new GameItem(uuid)
+    //       gameItem.catalogueId = catalogueId
+    //       gameItem.rarityId = rarityId
+    //       gameItem.level = level
+    //       gameItem.graphicId = _graphicId
+    //       gameItem.name = _name
+    //       gameItem.isActivated = true
+    //       gameItem.save()
+    //     }
+    //   }
+    // }
+  } else {
+    entity.description = "decoded failed";
+    entity.save()
   } 
 
+}
+
+export function computeCatalogueItemHash(catalogueId: BigInt, rarityId: BigInt): Bytes {
+
+  let tupleArray: Array<ethereum.Value> = [
+    ethereum.Value.fromUnsignedBigInt(catalogueId),
+    ethereum.Value.fromUnsignedBigInt(rarityId),
+  ]
+  let tuple = tupleArray as ethereum.Tuple
+  let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+  return crypto.keccak256(encoded)
 }
 
